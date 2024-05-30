@@ -40,3 +40,11 @@ def format_date_for_input(value):
 
     # Convert to target timezone (+07:00)
     return utc_time.astimezone(target_tz).strftime('%Y-%m-%d')
+
+@register.filter
+@stringfilter
+def count_line(value):
+    if value:
+        return len(value.split('\n'))
+
+    return 3

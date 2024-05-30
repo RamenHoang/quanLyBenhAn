@@ -130,14 +130,14 @@
                 <div class="mb-3">
                     <label for="id_diagnose" class="form-label">Chẩn đoán</label>
                     <textarea name="diagnose" id="id_diagnose" class="form-control"
-                              readonly rows="3">{{ health_record.diagnose }}
+                              readonly rows="{{ health_record.diagnose|count_line }}">{{ health_record.diagnose }}
                     </textarea>
                 </div>
                 <div class="mb-3">
                     <label for="id_health_record_description" class="form-label">Bệnh án</label>
                     <textarea name="health_record_description"
                               id="id_health_record_description" class="form-control"
-                              readonly rows="3">{{ health_record.health_record_description }}</textarea>
+                              readonly rows="{{ health_record.health_record_description|count_line }}">{{ health_record.health_record_description }}</textarea>
                 </div>
             </form>
         </div>

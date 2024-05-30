@@ -132,14 +132,14 @@
                 <div class="mb-3">
                     <label for="id_diagnose" class="form-label">Chẩn đoán</label>
                     <textarea name="diagnose" id="id_diagnose" class="form-control"
-                              required rows="3">{{ health_record.diagnose }}
+                              required rows="{{ health_record.diagnose|count_line }}">{{ health_record.diagnose }}
                     </textarea>
                 </div>
                 <div class="mb-3">
                     <label for="id_health_record_description" class="form-label">Bệnh án</label>
                     <textarea name="health_record_description"
                               id="id_health_record_description" class="form-control"
-                              required rows="3">{{ health_record.health_record_description }}</textarea>
+                              required rows="{{ health_record.health_record_description|count_line }}">{{ health_record.health_record_description }}</textarea>
                 </div>
                 <div class="d-grid gap-2 col-12 mx-auto">
                     <button type="submit" class="btn btn-primary">Cập nhật bệnh án</button>
