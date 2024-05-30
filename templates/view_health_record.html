@@ -1,0 +1,145 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load store_extra %}
+{% block content %}
+    <div class="row justify-content-lg-center">
+        <div class="col-md-10">
+            <h2>Thông tin bệnh án</h2>
+            <hr>
+            <form>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <label for="id_patient_full_name" class="form-label">Họ và tên bệnh nhân</label>
+                        <input type="text" name="patient_full_name" value="{{ health_record.patient_full_name }}"
+                               id="id_patient_full_name" class="form-control"
+                               readonly>
+                    </div>
+                    <div class="col-lg-3">
+                        <label for="id_patient_date_of_birth" class="form-label">Ngày sinh bệnh nhân</label>
+                        <input type="date" name="patient_date_of_birth"
+                               value="{{ health_record.patient_date_of_birth|format_date_for_input }}" id="id_patient_date_of_birth"
+                               class="form-control"
+                               readonly>
+                    </div>
+                    <div class="col-lg-3">
+                        <label class="form-label">Giới tính</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="patient_gender"
+                                    {% if health_record.patient_gender == 'male' %}
+                                   checked
+                                    {% endif %}  id="id_gender_male"
+                                   value="male">
+                            <label class="form-check-label" for="id_gender_male">
+                                Nam
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="patient_gender"
+                                    {% if health_record.patient_gender == 'female' %}
+                                   checked
+                                    {% endif %} id="id_gender_female"
+                                   value="female">
+                            <label class="form-check-label" for="id_gender_female">
+                                Nữ
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-8">
+                        <label for="id_patient_address" class="form-label">Địa chỉ</label>
+                        <input type="text" name="patient_address" value="{{ health_record.patient_address }}"
+                               id="id_patient_address" class="form-control"
+                               readonly>
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="id_patient_nation" class="form-label">Dân tộc</label>
+                        <input type="text" name="patient_nation" value="{{ health_record.patient_nation }}"
+                               id="id_patient_nation"
+                               class="form-control"
+                               readonly>
+                    </div>
+                    <div class="col-lg-2">
+                        <label for="id_patient_nationality" class="form-label">Quốc tịch</label>
+                        <input type="text" name="patient_nationality" value="{{ health_record.patient_nationality }}"
+                               id="id_patient_nationality"
+                               class="form-control"
+                               readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-4">
+                        <label for="id_patient_job" class="form-label">Nghề nghiệp</label>
+                        <input type="text" name="patient_job" value="{{ health_record.patient_job }}"
+                               id="id_patient_job" class="form-control"
+                               readonly>
+                    </div>
+                    <div class="col-lg-8">
+                        <label for="id_patient_working_address" class="form-label">Nơi làm việc</label>
+                        <input type="text" name="patient_working_address"
+                               value="{{ health_record.patient_working_address }}" id="id_patient_working_address"
+                               class="form-control"
+                               readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <label for="id_patient_identify_number" class="form-label">Căn cước công dân</label>
+                        <input type="text" name="patient_identify_number"
+                               value="{{ health_record.patient_identify_number }}" id="id_patient_identify_number"
+                               class="form-control"
+                               readonly>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="id_patient_health_ensurance_number" class="form-label">Số thẻ BHYT</label>
+                        <input type="text" name="patient_health_ensurance_number"
+                               value="{{ health_record.patient_health_ensurance_number }}"
+                               id="id_patient_health_ensurance_number"
+                               class="form-control"
+                               readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-6">
+                        <label for="id_patient_homie" class="form-label">Họ tên người nhà</label>
+                        <input type="text" name="patient_homie" value="{{ health_record.patient_homie }}"
+                               id="id_patient_homie" class="form-control"
+                               readonly>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="id_patient_homie_phone" class="form-label">Số điện thoại người nhà</label>
+                        <input type="text" name="patient_homie_phone" value="{{ health_record.patient_homie_phone }}"
+                               id="id_patient_homie_phone"
+                               class="form-control"
+                               readonly>
+                    </div>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <label for="id_doctor_id" class="form-label">Chọn bác sĩ</label>
+                    <select class="form-select" id="id_doctor_id" name="doctor_id"
+                            disabled>
+                        {% for doctor in doctors %}
+                            <option value="{{ doctor.id }}" {% if health_record.doctor.id == doctor.id %}
+                                    selected
+                            {% endif %} >{{ doctor.name }} - {{ doctor.speciality.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="id_diagnose" class="form-label">Chẩn đoán</label>
+                    <textarea name="diagnose" id="id_diagnose" class="form-control"
+                              readonly rows="3">{{ health_record.diagnose }}
+                    </textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="id_health_record_description" class="form-label">Bệnh án</label>
+                    <textarea name="health_record_description"
+                              id="id_health_record_description" class="form-control"
+                              readonly rows="3">{{ health_record.health_record_description }}</textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

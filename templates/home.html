@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+{% load store_extra %}
+{% load static %}
+{% block content %}
+    <div class="row justify-content-lg-center">
+        <div class="col-md-12">
+            {% if not health_record %}
+                <h2 style="margin: auto">Danh sách bệnh án</h2>
+                <table class="table table-striped mt-5 align-middle">
+                    <thead>
+                    <tr>
+                        <th scope="col">Mã bệnh án</th>
+                        <th scope="col">CCCD</th>
+                        <th scope="col">Bệnh nhân</th>
+                        <th scope="col">Ngày tạo</th>
+                        <th scope="col">Bác sĩ</th>
+                        <th scope="col">Công cụ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for health_record in health_records %}
+                        <tr>
+                            <td>#{{ health_record.id }}</td>
+                            <td>{{ health_record.patient_identify_number }}</td>
+                            <td>{{ health_record.patient_full_name }}</td>
+                            <td>{{ health_record.health_record_date|format_datetime }}</td>
+                            <td>{{ health_record.doctor.name }}</td>
+                            <td>
+                                <a href="{% url 'health_record_detail' health_record.id %}"
+                                   class="btn btn-primary">Xem</a>
+                                <a href="{% url 'health_record_edit' health_record.id %}"
+                                   class="btn btn-warning">Sửa</a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#modal_health_record_{{ health_record.id }}">
+                                    Xóa
+                                </button>
+                                <div class="modal fade" id="modal_health_record_{{ health_record.id }}" tabindex="-1"
+                                     aria-labelledby="modal_health_record_{{ health_record.id }}_label"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5"
+                                                    id="modal_health_record_{{ health_record.id }}_label">Cảnh báo</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Hủy"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Xác nhận xóa bệnh án <strong>{{ health_record }}</strong>?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Hủy
+                                                </button>
+                                                <a href="{% url 'health_record_delete' health_record.id %}"
+                                                   class="btn btn-primary">Xác
+                                                    nhận</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor health_record in health_records %}
+                    </tbody>
+                </table>
+            {% else %}
+                <h2 style="margin: auto">Chưa có bệnh án nào được ghi nhận</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
